@@ -24,3 +24,6 @@ Content-Disposition: form-data; name="amount"
 GET  http://stud03/api/client/1/turnover/delete/2
 
 ###
+GET http://stud03/api/turnover/select
+
+###

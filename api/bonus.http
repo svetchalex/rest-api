@@ -1,0 +1,51 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+GET http://stud03/api/client/1/bonus/select
+
+###
+POST http://stud03/api/client/1/bonus/add
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="balance"
+
+43
+--WebAppBoundary--
+Content-Disposition: form-data; name="status"
+
+active
+--WebAppBoundary--
+Content-Disposition: form-data; name="date_bonus"
+
+2019-03-02 11:16:12
+--WebAppBoundary--
+
+###
+POST http://stud03/api/client/1/bonus/update/4
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="balance"
+
+43
+--WebAppBoundary--
+Content-Disposition: form-data; name="status"
+
+deleted
+--WebAppBoundary--
+Content-Disposition: form-data; name="date_bonus"
+
+2019-03-02 11:16:12
+--WebAppBoundary--
+
+###
+GET http://stud03/api/client/1/bonus/delete/4
+
+###
+GET http://stud03/api/bonus/select
+
+###
