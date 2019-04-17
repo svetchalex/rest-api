@@ -19,10 +19,6 @@ Content-Disposition: form-data; name="new"
 
 10
 --WebAppBoundary--
-Content-Disposition: form-data; name="date_discount"
-
-2019-03-02 11:16:12
---WebAppBoundary--
 
 ###
 POST http://stud03/api/client/2/discount/update/2

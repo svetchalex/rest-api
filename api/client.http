@@ -14,6 +14,19 @@ GET http://stud03/api/client/select/card/0000000000000001
 GET http://stud03/api/client/select
 
 ###
+POST http://stud03/api/client/select-by-days
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="firstday"
+
+2019-04-01
+--WebAppBoundary--
+Content-Disposition: form-data; name="lastday"
+
+2019-04-30
+--WebAppBoundary--
+###
 
 POST http://stud03/api/client/create
 Content-Type: multipart/form-data; boundary=WebAppBoundary
@@ -51,14 +64,6 @@ Content-Disposition: form-data; name="discount"
 Content-Disposition: form-data; name="mode"
 
 bonus
---WebAppBoundary--
-Content-Disposition: form-data; name="status"
-
-active
---WebAppBoundary--
-Content-Disposition: form-data; name="edition"
-
-2019-04-03
 --WebAppBoundary--
 
 ###
@@ -110,5 +115,9 @@ Content-Disposition: form-data; name="edition"
 ###
 
 GET http://stud03/api/client/delete/13
+
+###
+
+GET http://stud03/api/client/3/block
 
 ###

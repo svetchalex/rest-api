@@ -11,10 +11,6 @@ POST http://stud03/api/client/1/turnover/add
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="date_receipt"
-
-2019-08-06 15:29:41
---WebAppBoundary--
 Content-Disposition: form-data; name="amount"
 
 6540
@@ -25,5 +21,8 @@ GET  http://stud03/api/client/1/turnover/delete/2
 
 ###
 GET http://stud03/api/turnover/select
+
+###
+GET http://stud03/api/turnover/select-with-card
 
 ###

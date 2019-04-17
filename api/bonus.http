@@ -7,21 +7,82 @@
 GET http://stud03/api/client/1/bonus/select
 
 ###
+POST http://stud03/api/client/1/bonus/select-by-days
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="firstday"
+
+2019-04-01
+--WebAppBoundary--
+Content-Disposition: form-data; name="lastday"
+
+2019-04-30
+--WebAppBoundary--
+###
 POST http://stud03/api/client/1/bonus/add
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
+Content-Disposition: form-data; name="amount"
+
+5234
+--WebAppBoundary--
+Content-Disposition: form-data; name="border"
+
+1000
+--WebAppBoundary--
 Content-Disposition: form-data; name="balance"
 
 43
 --WebAppBoundary--
-Content-Disposition: form-data; name="status"
-
-active
---WebAppBoundary--
 Content-Disposition: form-data; name="date_bonus"
 
 2019-03-02 11:16:12
+--WebAppBoundary--
+
+###
+POST http://stud03/api/client/1/bonus/add
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="amount"
+
+5234
+--WebAppBoundary--
+Content-Disposition: form-data; name="border"
+
+1000
+--WebAppBoundary--
+Content-Disposition: form-data; name="balance"
+
+43
+--WebAppBoundary--
+Content-Disposition: form-data; name="date_bonus"
+
+2019-04-21 11:16:12
+--WebAppBoundary--
+
+###
+POST http://stud03/api/client/1/bonus/add
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="amount"
+
+5234
+--WebAppBoundary--
+Content-Disposition: form-data; name="border"
+
+1000
+--WebAppBoundary--
+Content-Disposition: form-data; name="balance"
+
+43
+--WebAppBoundary--
+Content-Disposition: form-data; name="date_bonus"
+
+2019-04-12 11:16:12
 --WebAppBoundary--
 
 ###
@@ -47,5 +108,15 @@ GET http://stud03/api/client/1/bonus/delete/4
 
 ###
 GET http://stud03/api/bonus/select
+
+###
+POST http://stud03/api/client/1/bonus/remove
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="remove_bonus"
+
+4672
+--WebAppBoundary--
 
 ###
