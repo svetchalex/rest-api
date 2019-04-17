@@ -3,7 +3,7 @@
 
 function api()
 {
-    // header('Content-Type: application/json; charset=UTF-8');
+    header('Content-Type: application/json; charset=UTF-8');
     $url = $_SERVER['REQUEST_URI'];
     $urls = explode('/', $url);
     $result = false;
@@ -29,19 +29,19 @@ function api()
             }
             if ($urls[3] === 'create') {
                 header('HTTP/1.1 200 OK');
-               $result = create_user();
+                $result = create_user();
             }
             if ($urls[3] === 'update'
                 && is_numeric($urls[4])
             ) {
                 header('HTTP/1.1 200 OK');
-                $result = update_user();
+                $result = update_user($urls[4]);
             }
             if ($urls[3] === 'delete'
                 && is_numeric($urls[4])
             ) {
                 header('HTTP/1.1 200 OK');
-                $result = delete_user();
+                $result = delete_user($urls[4]);
             }
 
         }
@@ -224,6 +224,13 @@ function login()
     }
     return $function;
 }
+
+function connection()
+{
+    return $mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
+
+}
+
 function select_users()
 {
     $mysqli = connection();
@@ -240,6 +247,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_user_key($key)
 {
 
@@ -274,13 +282,61 @@ SQL;
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
-
-
 }
-function connection()
-{
-    return $mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
 
+function create_user()
+{
+    $name = $_POST['name_user'];
+    $key = hash('tiger192,3', $name);
+    $worker = $_POST['function'];
+    $mysqli = connection();
+    $sql = <<<SQL
+        INSERT INTO users (id, api_key, name, function) VALUES 
+        (null, '$key', '$name', '$worker' )
+SQL;
+    try {
+        if (!$mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return true;
+}
+function update_user($id)
+{   $key = $_POST['api_key'];
+    $name = $_POST['name_user'];
+    $worker = $_POST['function'];
+    $mysqli = connection();
+    $sql = <<<SQL
+        UPDATE users SET api_key = '$key', name = '$name', function = '$worker' WHERE id = $id
+        
+SQL;
+    try {
+        if (!$mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return true;
+}
+function delete_user($id){
+    $mysqli = connection();
+    $sql = <<<SQL
+        DELETE FROM users WHERE id = '$id'
+SQL;
+    try {
+        if (!$mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return true;
 }
 
 function select_telephone($telephone)

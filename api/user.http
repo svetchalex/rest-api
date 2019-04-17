@@ -12,5 +12,42 @@ GET http://stud03/api/user/select/1
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
+POST http://stud03/api/user/create
+Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
+Content-Type: multipart/form-data; boundary=WebAppBoundary
 
+--WebAppBoundary
+Content-Disposition: form-data; name="name_user"
+
+Vetrov Ivan
+--WebAppBoundary--
+Content-Disposition: form-data; name="function"
+
+operator
+--WebAppBoundary--
+
+###
+POST http://stud03/api/user/update/3
+Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="api_key"
+
+c46b66891e3c4e57c2a19d7c24b2c31573f90ed0a8c356ef
+--WebAppBoundary--
+Content-Disposition: form-data; name="name_user"
+
+Vetrov Ivan
+--WebAppBoundary--
+Content-Disposition: form-data; name="function"
+
+manager
+--WebAppBoundary--
+
+###
+GET http://stud03/api/user/delete/3
+Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
+
+###
 
