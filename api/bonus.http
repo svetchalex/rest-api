@@ -5,9 +5,11 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 GET http://stud03/api/client/1/bonus/select
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
 POST http://stud03/api/client/1/bonus/select-by-days
+Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -21,6 +23,7 @@ Content-Disposition: form-data; name="lastday"
 --WebAppBoundary--
 ###
 POST http://stud03/api/client/1/bonus/add
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -43,6 +46,7 @@ Content-Disposition: form-data; name="date_bonus"
 
 ###
 POST http://stud03/api/client/1/bonus/add
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -65,6 +69,7 @@ Content-Disposition: form-data; name="date_bonus"
 
 ###
 POST http://stud03/api/client/1/bonus/add
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -87,6 +92,7 @@ Content-Disposition: form-data; name="date_bonus"
 
 ###
 POST http://stud03/api/client/1/bonus/update/4
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -105,12 +111,15 @@ Content-Disposition: form-data; name="date_bonus"
 
 ###
 GET http://stud03/api/client/1/bonus/delete/4
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
 GET http://stud03/api/bonus/select
+Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
 POST http://stud03/api/client/1/bonus/remove
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary

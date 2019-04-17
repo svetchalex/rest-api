@@ -6,10 +6,47 @@ function api()
     // header('Content-Type: application/json; charset=UTF-8');
     $url = $_SERVER['REQUEST_URI'];
     $urls = explode('/', $url);
-    $result = '';
+    $result = false;
+    $function = login();
+    if ($function === false) {
+        header('HTTP/1.0 401 Unauthorized');
+    }
     if ($urls[1] === 'api') {
 
-        if ($urls[2] === 'client') {
+        if ($function === 'manager' && $urls[2] === 'user') {
+            header('HTTP/1.1 200 OK');
+            if ($urls[3] === 'select') {
+                if (count($urls) === 4) {
+                    header('HTTP/1.1 200 OK');
+                    $result = json_encode(select_users());
+
+                }
+                if (count($urls) === 5
+                    && is_numeric($urls[4])) {
+                    header('HTTP/1.1 200 OK');
+                    $result = json_encode(select_user($urls[4]));
+                }
+            }
+            if ($urls[3] === 'create') {
+                header('HTTP/1.1 200 OK');
+               $result = create_user();
+            }
+            if ($urls[3] === 'update'
+                && is_numeric($urls[4])
+            ) {
+                header('HTTP/1.1 200 OK');
+                $result = update_user();
+            }
+            if ($urls[3] === 'delete'
+                && is_numeric($urls[4])
+            ) {
+                header('HTTP/1.1 200 OK');
+                $result = delete_user();
+            }
+
+        }
+
+        if ($function !== false && $urls[2] === 'client') {
 
             if ($urls[3] === 'select') {
 
@@ -25,15 +62,18 @@ function api()
                 }
 
 
-                if (count($urls) === 4) {
+                if ($function === 'manager' && count($urls) === 4) {
                     header('HTTP/1.1 200 OK');
                     $result = json_encode(select_clients());
-
                 }
             }
-            if ($urls[3] === 'select-by-days') {
+            if ($function === 'manager' && $urls[3] === 'select-by-days') {
                 header('HTTP/1.1 201 Created');
                 $result = json_encode(select_clients_days());
+            }
+            if ($function === 'manager' && $urls[3] === 'select-active') {
+                header('HTTP/1.1 201 Created');
+                $result = json_encode(select_active_clients());
             }
             if ($urls[3] === 'create') {
                 header('HTTP/1.1 201 Created');
@@ -128,15 +168,22 @@ function api()
                         $result = delete_discount($urls[3], $urls[6]);
                     }
                 }
-                if ($urls[4] === 'block') {
+                if ($urls[4] === 'block-card') {
                     header('HTTP/1.1 201 Created');
                     $result = block_card($urls[3]);
+
+                }
+                if ($urls[4] === 'delete-card') {
+                    header('HTTP/1.1 201 Created');
+                    $result = delete_card($urls[3]);
 
                 }
             }
 
         }
-        if ($urls[2] === 'turnover') {
+        if ($function === 'manager'
+            && $urls[2] === 'turnover'
+        ) {
             if ($urls[3] === 'select') {
                 header('HTTP/1.1 200 OK');
                 $result = json_encode(turnover_all());
@@ -146,13 +193,15 @@ function api()
                 $result = json_encode(turnover_all_card());
             }
         }
-        if ($urls[2] === 'bonus'
+        if ($function === 'manager'
+            && $urls[2] === 'bonus'
             && $urls[3] === 'select'
         ) {
             header('HTTP/1.1 200 OK');
             $result = json_encode(bonus_all());
         }
-        if ($urls[2] === 'discount'
+        if ($function === 'manager'
+            && $urls[2] === 'discount'
             && $urls[3] === 'select'
         ) {
             header('HTTP/1.1 200 OK');
@@ -161,9 +210,73 @@ function api()
 
     }
 
+
     return $result;
 }
 
+function login()
+{
+    $function = false;
+    $user = $_SERVER['PHP_AUTH_USER'];
+    $worker = select_user_key($user);
+    if (!empty($worker)) {
+        $function = $worker['function'];
+    }
+    return $function;
+}
+function select_users()
+{
+    $mysqli = connection();
+    $sql = <<<SQL
+        SELECT * FROM users ORDER BY name
+SQL;
+    try {
+        if (!$res = $mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return $res->fetch_all();
+}
+function select_user_key($key)
+{
+
+    $mysqli = connection();
+    $sql = <<<SQL
+        SELECT * FROM users WHERE api_key = '$key' ORDER BY name LIMIT 1
+SQL;
+    try {
+        if (!$res = $mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return $res->fetch_assoc();
+}
+
+function select_user($id)
+{
+
+    $mysqli = connection();
+    $sql = <<<SQL
+        SELECT * FROM users WHERE id = '$id' ORDER BY name LIMIT 1
+SQL;
+    try {
+        if (!$res = $mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return $res->fetch_all();
+
+
+}
 function connection()
 {
     return $mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
@@ -230,6 +343,23 @@ function select_clients()
     $mysqli = connection();
     $sql = <<<SQL
         SELECT * FROM clients ORDER BY lastname
+SQL;
+    try {
+        if (!$res = $mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return $res->fetch_all();
+}
+
+function select_active_clients()
+{
+    $mysqli = connection();
+    $sql = <<<SQL
+        SELECT * FROM clients WHERE status = 'active' ORDER BY lastname
 SQL;
     try {
         if (!$res = $mysqli->query($sql)) {
@@ -343,6 +473,25 @@ function block_card($id)
     $mysqli = connection();
     $sql = <<<SQL
         UPDATE clients SET status = 'blocked' WHERE id = $id
+        
+SQL;
+    try {
+        if (!$mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return true;
+}
+
+function delete_card($id)
+{
+
+    $mysqli = connection();
+    $sql = <<<SQL
+        UPDATE clients SET status = 'deleted' WHERE id = $id
         
 SQL;
     try {
