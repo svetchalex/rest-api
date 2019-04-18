@@ -50,7 +50,7 @@ Artem
 --WebAppBoundary--
 Content-Disposition: form-data; name="telephone"
 
-79783643435
+79783642435
 --WebAppBoundary--
 Content-Disposition: form-data; name="birthday"
 
@@ -58,7 +58,7 @@ Content-Disposition: form-data; name="birthday"
 --WebAppBoundary--
 Content-Disposition: form-data; name="code"
 
-0000000000000005
+0000000000000006
 --WebAppBoundary--
 Content-Disposition: form-data; name="bonus"
 
@@ -67,10 +67,6 @@ Content-Disposition: form-data; name="bonus"
 Content-Disposition: form-data; name="discount"
 
 0
---WebAppBoundary--
-Content-Disposition: form-data; name="mode"
-
-bonus
 --WebAppBoundary--
 
 ###

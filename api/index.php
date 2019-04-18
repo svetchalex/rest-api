@@ -5,10 +5,7 @@ function api()
     $url = $_SERVER['REQUEST_URI'];
     $urls = explode('/', $url);
     $result = false;
-    $function = login();
-    if ($function === false) {
-        header('HTTP/1.0 401 Unauthorized');
-    }
+
     if ($urls[1] === 'api') {
         if ($urls[2] === 'mode') {
             header('HTTP/1.1 200 OK');
@@ -28,7 +25,9 @@ function api()
         }
 
 
-        if ($function === 'manager' && $urls[2] === 'user') {
+        if ($urls[2] === 'user'
+            && login() === 'manager'
+        ) {
             header('HTTP/1.1 200 OK');
             if ($urls[3] === 'select') {
                 if (count($urls) === 4) {
@@ -58,7 +57,9 @@ function api()
                 $result = delete_user($urls[4]);
             }
         }
-        if ($function !== false && $urls[2] === 'client') {
+        if ($urls[2] === 'client'
+            && login() !== false
+        ) {
             if ($urls[3] === 'select') {
                 if (count($urls) === 6) {
                     if ($urls[4] === 'telephone') {
@@ -70,16 +71,22 @@ function api()
                         $result = json_encode(select_card($urls[5]));
                     }
                 }
-                if ($function === 'manager' && count($urls) === 4) {
+                if (count($urls) === 4
+                    && login() === 'manager'
+                ) {
                     header('HTTP/1.1 200 OK');
                     $result = json_encode(select_clients());
                 }
             }
-            if ($function === 'manager' && $urls[3] === 'select-by-days') {
+            if ($urls[3] === 'select-by-days'
+                && login() === 'manager'
+            ) {
                 header('HTTP/1.1 201 Created');
                 $result = json_encode(select_clients_days());
             }
-            if ($function === 'manager' && $urls[3] === 'select-active') {
+            if ($urls[3] === 'select-active'
+                && login() === 'manager'
+            ) {
                 header('HTTP/1.1 201 Created');
                 $result = json_encode(select_active_clients());
             }
@@ -119,7 +126,9 @@ function api()
                         $result = delete_turnover($urls[3], $urls[6]);
                     }
                 }
-                if ($urls[4] === 'bonus') {
+                if ($urls[4] === 'bonus'
+                    && mode() === 'bonus'
+                ) {
                     if ($urls[5] === 'select') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_bonus($urls[3]));
@@ -151,7 +160,9 @@ function api()
                         $result = remove_bonus($urls[3]);
                     }
                 }
-                if ($urls[4] === 'discount') {
+                if ($urls[4] === 'discount'
+                && mode()==='discount'
+                ) {
                     if ($urls[5] === 'select') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_discount($urls[3]));
@@ -185,8 +196,8 @@ function api()
                 }
             }
         }
-        if ($function === 'manager'
-            && $urls[2] === 'turnover'
+        if ($urls[2] === 'turnover'
+            && login() === 'manager'
         ) {
             if ($urls[3] === 'select') {
                 header('HTTP/1.1 200 OK');
@@ -197,16 +208,18 @@ function api()
                 $result = json_encode(turnover_all_card());
             }
         }
-        if ($function === 'manager'
-            && $urls[2] === 'bonus'
+        if ($urls[2] === 'bonus'
             && $urls[3] === 'select'
+            && login() === 'manager'
+            && mode() === 'bonus'
         ) {
             header('HTTP/1.1 200 OK');
             $result = json_encode(bonus_all());
         }
-        if ($function === 'manager'
-            && $urls[2] === 'discount'
+        if ($urls[2] === 'discount'
             && $urls[3] === 'select'
+            && login() === 'manager'
+            && mode() === 'discount'
         ) {
             header('HTTP/1.1 200 OK');
             $result = json_encode(discount_all());
@@ -214,6 +227,7 @@ function api()
     }
     return $result;
 }
+
 function login()
 {
     $function = false;
@@ -224,6 +238,7 @@ function login()
     }
     return $function;
 }
+
 function name_user()
 {
     $name = false;
@@ -285,6 +300,7 @@ function connection()
 {
     return $mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
 }
+
 function select_users()
 {
     $mysqli = connection();
@@ -300,6 +316,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_user_key($key)
 {
     $mysqli = connection();
@@ -315,6 +332,7 @@ SQL;
     }
     return $res->fetch_assoc();
 }
+
 function select_user($id)
 {
     $mysqli = connection();
@@ -330,6 +348,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function create_user()
 {
     $name = $_POST['name_user'];
@@ -349,8 +368,10 @@ SQL;
     }
     return true;
 }
+
 function update_user($id)
-{   $key = $_POST['api_key'];
+{
+    $key = $_POST['api_key'];
     $name = $_POST['name_user'];
     $worker = $_POST['function'];
     $mysqli = connection();
@@ -367,7 +388,9 @@ SQL;
     }
     return true;
 }
-function delete_user($id){
+
+function delete_user($id)
+{
     $mysqli = connection();
     $sql = <<<SQL
         DELETE FROM users WHERE id = '$id'
@@ -381,6 +404,7 @@ SQL;
     }
     return true;
 }
+
 function select_telephone($telephone)
 {
     $mysqli = connection();
@@ -396,6 +420,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_client($id)
 {
     $mysqli = connection();
@@ -411,6 +436,7 @@ SQL;
     }
     return $res->fetch_assoc();
 }
+
 function select_card($card)
 {
     $mysqli = connection();
@@ -426,6 +452,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_clients()
 {
     $mysqli = connection();
@@ -441,6 +468,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_active_clients()
 {
     $mysqli = connection();
@@ -456,6 +484,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_clients_days()
 {
     $firstday = $_POST['firstday'];
@@ -473,6 +502,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function create_client()
 {
     $lastname = $_POST['lastname'];
@@ -482,7 +512,7 @@ function create_client()
     $code = $_POST['code'];
     $bonus = $_POST['bonus'];
     $discount = $_POST['discount'];
-    $mode = $_POST['mode'];
+    $mode = mode();
     $status = 'active';
     $edition = date('Y-m-d');
     $mysqli = connection();
@@ -500,6 +530,7 @@ SQL;
     }
     return true;
 }
+
 function update_client($id)
 {
     $lastname = $_POST['lastname'];
@@ -528,6 +559,7 @@ SQL;
     }
     return true;
 }
+
 function delete_client($id)
 {
     $mysqli = connection();
@@ -543,6 +575,7 @@ SQL;
     }
     return true;
 }
+
 function block_card($id)
 {
     $mysqli = connection();
@@ -559,6 +592,7 @@ SQL;
     }
     return true;
 }
+
 function delete_card($id)
 {
     $mysqli = connection();
@@ -575,6 +609,7 @@ SQL;
     }
     return true;
 }
+
 function select_turnover($client)
 {
     $mysqli = connection();
@@ -590,6 +625,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function add_turnover($client)
 {
     $date = date('Y-m-d H:i:s');
@@ -608,6 +644,7 @@ SQL;
     }
     return true;
 }
+
 function delete_turnover($client, $id)
 {
     $mysqli = connection();
@@ -623,6 +660,7 @@ SQL;
     }
     return true;
 }
+
 function select_bonus($client)
 {
     $mysqli = connection();
@@ -638,6 +676,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_bonus_days($client)
 {
     $firstday = $_POST['firstday'];
@@ -656,6 +695,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function add_bonus($client, $bonus)
 {
     $receipt = $_POST['amount'];
@@ -688,6 +728,7 @@ SQL;
     }
     return $result;
 }
+
 function birthday($id, $dateBonus)
 {
     $result = false;
@@ -703,6 +744,7 @@ function birthday($id, $dateBonus)
     }
     return $result;
 }
+
 function holiday($dateBonus)
 {
     $result = false;
@@ -714,6 +756,7 @@ function holiday($dateBonus)
     }
     return $result;
 }
+
 function update_bonus($client, $id)
 {
     $balance = $_POST['balance'];
@@ -734,6 +777,7 @@ SQL;
     }
     return true;
 }
+
 function delete_bonus($client, $id)
 {
     $mysqli = connection();
@@ -749,6 +793,7 @@ SQL;
     }
     return true;
 }
+
 function select_discount($client)
 {
     $mysqli = connection();
@@ -764,12 +809,14 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function add_discount($client)
 {
     $current = $_POST['current'];
     $new = $_POST['new'];
     $date = date('Y-m-d H:i:s');
     $mysqli = connection();
+    change_discount_card($client, $new);
     $sql = <<<SQL
         INSERT INTO discounts (id, current, new, date_discount, id_client) VALUES
         (null, '$current', '$new', '$date', '$client' )
@@ -783,6 +830,7 @@ SQL;
     }
     return true;
 }
+
 function update_discount($client, $id)
 {
     $current = $_POST['current'];
@@ -803,6 +851,7 @@ SQL;
     }
     return true;
 }
+
 function delete_discount($client, $id)
 {
     $mysqli = connection();
@@ -818,6 +867,7 @@ SQL;
     }
     return true;
 }
+
 function turnover_all()
 {
     $mysqli = connection();
@@ -833,6 +883,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function turnover_all_card()
 {
     $mysqli = connection();
@@ -848,6 +899,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function bonus_all()
 {
     $mysqli = connection();
@@ -863,6 +915,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function discount_all()
 {
     $mysqli = connection();
@@ -878,6 +931,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function select_holiday($date)
 {
     $mysqli = connection();
@@ -893,6 +947,7 @@ SQL;
     }
     return $res->fetch_all();
 }
+
 function change_bonus_card($id, $balance)
 {
     $client = select_client($id);
@@ -912,6 +967,23 @@ SQL;
     }
     return true;
 }
+function change_discount_card($id, $new)
+{
+    $mysqli = connection();
+    $sql = <<<SQL
+        UPDATE clients SET discount = $new WHERE id = $id
+        
+SQL;
+    try {
+        if (!$mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return true;
+}
+
 function remove_bonus($id)
 {
     $result = false;
@@ -946,4 +1018,5 @@ SQL;
     }
     return $result;
 }
+
 echo api();

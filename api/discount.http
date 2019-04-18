@@ -8,7 +8,7 @@ GET http://stud03/api/client/2/discount/select
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
-POST http://stud03/api/client/2/discount/add
+POST http://stud03/api/client/5/discount/add
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
