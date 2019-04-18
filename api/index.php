@@ -1,6 +1,4 @@
 <?php
-
-
 function api()
 {
     header('Content-Type: application/json; charset=UTF-8');
@@ -12,6 +10,23 @@ function api()
         header('HTTP/1.0 401 Unauthorized');
     }
     if ($urls[1] === 'api') {
+        if ($urls[2] === 'mode') {
+            header('HTTP/1.1 200 OK');
+            if (add_mode()) {
+                $result = mode();
+            }
+        }
+        if ($urls[2] === 'login') {
+            $function = login();
+            if ($function !== false) {
+                header('HTTP/1.1 200 OK');
+                $result = name_user();
+                if ($function === false) {
+                    header('HTTP/1.0 401 Unauthorized');
+                }
+            }
+        }
+
 
         if ($function === 'manager' && $urls[2] === 'user') {
             header('HTTP/1.1 200 OK');
@@ -19,7 +34,6 @@ function api()
                 if (count($urls) === 4) {
                     header('HTTP/1.1 200 OK');
                     $result = json_encode(select_users());
-
                 }
                 if (count($urls) === 5
                     && is_numeric($urls[4])) {
@@ -43,13 +57,9 @@ function api()
                 header('HTTP/1.1 200 OK');
                 $result = delete_user($urls[4]);
             }
-
         }
-
         if ($function !== false && $urls[2] === 'client') {
-
             if ($urls[3] === 'select') {
-
                 if (count($urls) === 6) {
                     if ($urls[4] === 'telephone') {
                         header('HTTP/1.1 200 OK');
@@ -60,8 +70,6 @@ function api()
                         $result = json_encode(select_card($urls[5]));
                     }
                 }
-
-
                 if ($function === 'manager' && count($urls) === 4) {
                     header('HTTP/1.1 200 OK');
                     $result = json_encode(select_clients());
@@ -78,7 +86,6 @@ function api()
             if ($urls[3] === 'create') {
                 header('HTTP/1.1 201 Created');
                 $result = create_client();
-
             }
             if ($urls[3] === 'update'
                 && count($urls) === 5
@@ -171,15 +178,12 @@ function api()
                 if ($urls[4] === 'block-card') {
                     header('HTTP/1.1 201 Created');
                     $result = block_card($urls[3]);
-
                 }
                 if ($urls[4] === 'delete-card') {
                     header('HTTP/1.1 201 Created');
                     $result = delete_card($urls[3]);
-
                 }
             }
-
         }
         if ($function === 'manager'
             && $urls[2] === 'turnover'
@@ -207,13 +211,9 @@ function api()
             header('HTTP/1.1 200 OK');
             $result = json_encode(discount_all());
         }
-
     }
-
-
     return $result;
 }
-
 function login()
 {
     $function = false;
@@ -224,13 +224,67 @@ function login()
     }
     return $function;
 }
+function name_user()
+{
+    $name = false;
+    $user = $_SERVER['PHP_AUTH_USER'];
+    $worker = select_user_key($user);
+    if (!empty($worker)) {
+        $name = $worker['name'];
+    }
+    return $name;
+}
+
+function add_mode()
+{
+    $mode = $_POST['mode_card'];
+    $mysqli = connection();
+    $sql = <<<SQL
+       UPDATE mode_cards SET mode_card = '$mode' WHERE id = '1'
+      
+SQL;
+    try {
+        if (!$mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return true;
+}
+
+function select_mode()
+{
+    $mysqli = connection();
+    $sql = <<<SQL
+       SELECT * FROM mode_cards WHERE id = '1' LIMIT 1
+      
+SQL;
+    try {
+        if (!$res = $mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+
+
+    return $res->fetch_assoc();
+}
+
+function mode()
+{
+    $mode_card = select_mode();
+    $result = $mode_card['mode_card'];
+    return $result;
+}
 
 function connection()
 {
     return $mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
-
 }
-
 function select_users()
 {
     $mysqli = connection();
@@ -241,16 +295,13 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function select_user_key($key)
 {
-
     $mysqli = connection();
     $sql = <<<SQL
         SELECT * FROM users WHERE api_key = '$key' ORDER BY name LIMIT 1
@@ -259,16 +310,13 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_assoc();
 }
-
 function select_user($id)
 {
-
     $mysqli = connection();
     $sql = <<<SQL
         SELECT * FROM users WHERE id = '$id' ORDER BY name LIMIT 1
@@ -277,13 +325,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function create_user()
 {
     $name = $_POST['name_user'];
@@ -298,7 +344,6 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
@@ -317,7 +362,6 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
@@ -332,16 +376,13 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function select_telephone($telephone)
 {
-
     $mysqli = connection();
     $sql = <<<SQL
         SELECT * FROM clients WHERE telephone = '$telephone' ORDER BY lastname LIMIT 1
@@ -350,17 +391,13 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
-
 }
-
 function select_client($id)
 {
-
     $mysqli = connection();
     $sql = <<<SQL
         SELECT * FROM clients WHERE id = '$id' ORDER BY lastname LIMIT 1
@@ -369,14 +406,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_assoc();
-
 }
-
 function select_card($card)
 {
     $mysqli = connection();
@@ -387,13 +421,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function select_clients()
 {
     $mysqli = connection();
@@ -404,13 +436,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function select_active_clients()
 {
     $mysqli = connection();
@@ -421,13 +451,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function select_clients_days()
 {
     $firstday = $_POST['firstday'];
@@ -440,13 +468,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function create_client()
 {
     $lastname = $_POST['lastname'];
@@ -469,13 +495,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function update_client($id)
 {
     $lastname = $_POST['lastname'];
@@ -499,13 +523,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function delete_client($id)
 {
     $mysqli = connection();
@@ -516,16 +538,13 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function block_card($id)
 {
-
     $mysqli = connection();
     $sql = <<<SQL
         UPDATE clients SET status = 'blocked' WHERE id = $id
@@ -535,16 +554,13 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function delete_card($id)
 {
-
     $mysqli = connection();
     $sql = <<<SQL
         UPDATE clients SET status = 'deleted' WHERE id = $id
@@ -554,13 +570,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function select_turnover($client)
 {
     $mysqli = connection();
@@ -571,13 +585,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function add_turnover($client)
 {
     $date = date('Y-m-d H:i:s');
@@ -591,15 +603,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
-
-
     return true;
 }
-
 function delete_turnover($client, $id)
 {
     $mysqli = connection();
@@ -610,13 +618,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function select_bonus($client)
 {
     $mysqli = connection();
@@ -627,13 +633,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function select_bonus_days($client)
 {
     $firstday = $_POST['firstday'];
@@ -647,13 +651,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function add_bonus($client, $bonus)
 {
     $receipt = $_POST['amount'];
@@ -680,14 +682,12 @@ SQL;
             if (!$mysqli->query($sql)) {
                 throw new Exception($mysqli->error);
             }
-
         } catch (Exception $e) {
             echo 'Error: ', $e->getMessage(), "\n";
         }
     }
     return $result;
 }
-
 function birthday($id, $dateBonus)
 {
     $result = false;
@@ -703,7 +703,6 @@ function birthday($id, $dateBonus)
     }
     return $result;
 }
-
 function holiday($dateBonus)
 {
     $result = false;
@@ -715,7 +714,6 @@ function holiday($dateBonus)
     }
     return $result;
 }
-
 function update_bonus($client, $id)
 {
     $balance = $_POST['balance'];
@@ -731,13 +729,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function delete_bonus($client, $id)
 {
     $mysqli = connection();
@@ -748,13 +744,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function select_discount($client)
 {
     $mysqli = connection();
@@ -765,13 +759,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function add_discount($client)
 {
     $current = $_POST['current'];
@@ -786,13 +778,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function update_discount($client, $id)
 {
     $current = $_POST['current'];
@@ -808,13 +798,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function delete_discount($client, $id)
 {
     $mysqli = connection();
@@ -825,13 +813,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function turnover_all()
 {
     $mysqli = connection();
@@ -842,13 +828,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function turnover_all_card()
 {
     $mysqli = connection();
@@ -859,13 +843,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function bonus_all()
 {
     $mysqli = connection();
@@ -876,13 +858,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function discount_all()
 {
     $mysqli = connection();
@@ -893,13 +873,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function select_holiday($date)
 {
     $mysqli = connection();
@@ -910,13 +888,11 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return $res->fetch_all();
 }
-
 function change_bonus_card($id, $balance)
 {
     $client = select_client($id);
@@ -931,13 +907,11 @@ SQL;
         if (!$mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
     return true;
 }
-
 function remove_bonus($id)
 {
     $result = false;
@@ -957,7 +931,6 @@ SQL;
         
 SQL;
         try {
-
             if (!$mysqli->query($sql2)) {
                 throw new Exception($mysqli->error);
             }
@@ -967,12 +940,10 @@ SQL;
             if (!$mysqli->query($sql1)) {
                 throw new Exception($mysqli->error);
             }
-
         } catch (Exception $e) {
             echo 'Error: ', $e->getMessage(), "\n";
         }
     }
     return $result;
 }
-
 echo api();
