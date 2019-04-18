@@ -33,6 +33,20 @@ Content-Disposition: form-data; name="lastday"
 2019-04-30
 --WebAppBoundary--
 ###
+POST http://stud03/api/client/select-by-days
+Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="firstday"
+
+test
+--WebAppBoundary--
+Content-Disposition: form-data; name="lastday"
+
+2019-04-30
+--WebAppBoundary--
+###
 
 POST http://stud03/api/client/create
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
@@ -41,16 +55,16 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="lastname"
 
-Polskiy
+Суровая
 --WebAppBoundary--
 --WebAppBoundary
 Content-Disposition: form-data; name="firstname"
 
-Artem
+Анастасия
 --WebAppBoundary--
 Content-Disposition: form-data; name="telephone"
 
-79783642435
+79783641435
 --WebAppBoundary--
 Content-Disposition: form-data; name="birthday"
 
@@ -58,7 +72,7 @@ Content-Disposition: form-data; name="birthday"
 --WebAppBoundary--
 Content-Disposition: form-data; name="code"
 
-0000000000000006
+0000000000000007
 --WebAppBoundary--
 Content-Disposition: form-data; name="bonus"
 
@@ -77,12 +91,12 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="lastname"
 
-Polskiy
+Польский
 --WebAppBoundary--
 --WebAppBoundary
 Content-Disposition: form-data; name="firstname"
 
-Artem
+Артем
 --WebAppBoundary--
 Content-Disposition: form-data; name="telephone"
 
@@ -128,5 +142,8 @@ Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDA
 
 ###
 GET http://stud03/api/client/3/delete-card
+Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
+###
+GET http://stud03/api/client/3/test
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 ###

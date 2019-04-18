@@ -26,3 +26,15 @@ bonus
 --WebAppBoundary--
 
 ###
+
+POST http://stud03/api/mode
+Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="mode_card"
+
+test
+--WebAppBoundary--
+
+###

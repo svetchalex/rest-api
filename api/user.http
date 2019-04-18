@@ -23,7 +23,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="name_user"
 
-Vetrov Ivan
+Ветров Иван
 --WebAppBoundary--
 Content-Disposition: form-data; name="function"
 
@@ -42,7 +42,7 @@ c46b66891e3c4e57c2a19d7c24b2c31573f90ed0a8c356ef
 --WebAppBoundary--
 Content-Disposition: form-data; name="name_user"
 
-Vetrov Ivan
+Ветров Иван
 --WebAppBoundary--
 Content-Disposition: form-data; name="function"
 

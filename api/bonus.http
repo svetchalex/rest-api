@@ -68,7 +68,7 @@ Content-Disposition: form-data; name="date_bonus"
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/client/1/bonus/add
+POST http://stud03/api/client/3/bonus/add
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -84,10 +84,6 @@ Content-Disposition: form-data; name="border"
 Content-Disposition: form-data; name="balance"
 
 43
---WebAppBoundary--
-Content-Disposition: form-data; name="date_bonus"
-
-2019-04-12 11:16:12
 --WebAppBoundary--
 
 ###

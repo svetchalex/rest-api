@@ -5,19 +5,23 @@ function api()
     $url = $_SERVER['REQUEST_URI'];
     $urls = explode('/', $url);
     $result = false;
-
+    $check = false;
     if ($urls[1] === 'api') {
-        if ($urls[2] === 'mode') {
+        if ($urls[2] === 'mode'
+            && count($urls) === 3) {
             header('HTTP/1.1 200 OK');
             if (add_mode()) {
                 $result = mode();
+                $check = true;
             }
         }
-        if ($urls[2] === 'login') {
+        if ($urls[2] === 'login'
+            && count($urls) === 3) {
             $function = login();
             if ($function !== false) {
                 header('HTTP/1.1 200 OK');
                 $result = name_user();
+                $check = true;
                 if ($function === false) {
                     header('HTTP/1.0 401 Unauthorized');
                 }
@@ -33,28 +37,33 @@ function api()
                 if (count($urls) === 4) {
                     header('HTTP/1.1 200 OK');
                     $result = json_encode(select_users());
+                    $check = true;
                 }
                 if (count($urls) === 5
                     && is_numeric($urls[4])) {
                     header('HTTP/1.1 200 OK');
                     $result = json_encode(select_user($urls[4]));
+                    $check = true;
                 }
             }
             if ($urls[3] === 'create') {
                 header('HTTP/1.1 200 OK');
                 $result = create_user();
+                $check = true;
             }
             if ($urls[3] === 'update'
                 && is_numeric($urls[4])
             ) {
                 header('HTTP/1.1 200 OK');
                 $result = update_user($urls[4]);
+                $check = true;
             }
             if ($urls[3] === 'delete'
                 && is_numeric($urls[4])
             ) {
                 header('HTTP/1.1 200 OK');
                 $result = delete_user($urls[4]);
+                $check = true;
             }
         }
         if ($urls[2] === 'client'
@@ -65,10 +74,12 @@ function api()
                     if ($urls[4] === 'telephone') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_telephone($urls[5]));
+                        $check = true;
                     }
                     if ($urls[4] === 'card') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_card($urls[5]));
+                        $check = true;
                     }
                 }
                 if (count($urls) === 4
@@ -76,23 +87,30 @@ function api()
                 ) {
                     header('HTTP/1.1 200 OK');
                     $result = json_encode(select_clients());
+                    $check = true;
                 }
             }
             if ($urls[3] === 'select-by-days'
                 && login() === 'manager'
             ) {
-                header('HTTP/1.1 201 Created');
+                header('HTTP/1.1 200 OK');
                 $result = json_encode(select_clients_days());
+                $check = true;
+                if ($result === false) {
+                    header('HTTP/1.1 400 Bad Request');
+                }
             }
             if ($urls[3] === 'select-active'
                 && login() === 'manager'
             ) {
-                header('HTTP/1.1 201 Created');
+                header('HTTP/1.1 200 OK');
                 $result = json_encode(select_active_clients());
+                $check = true;
             }
             if ($urls[3] === 'create') {
-                header('HTTP/1.1 201 Created');
+                header('HTTP/1.1 200 OK');
                 $result = create_client();
+                $check = true;
             }
             if ($urls[3] === 'update'
                 && count($urls) === 5
@@ -100,6 +118,7 @@ function api()
                 )) {
                 header('HTTP/1.1 200 OK');
                 $result = update_client($urls[4]);
+                $check = true;
             }
             if ($urls[3] === 'delete'
                 && count($urls) === 5
@@ -107,16 +126,19 @@ function api()
                 )) {
                 header('HTTP/1.1 200 OK');
                 $result = delete_client($urls[4]);
+                $check = true;
             }
             if (is_numeric($urls[3])) {
                 if ($urls[4] === 'turnover') {
                     if ($urls[5] === 'select') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_turnover($urls[3]));
+                        $check = true;
                     }
                     if ($urls[5] === 'add') {
                         header('HTTP/1.1 200 OK');
                         $result = add_turnover($urls[3]);
+                        $check = true;
                     }
                     if ($urls[5] === 'delete'
                         && count($urls) === 7
@@ -124,6 +146,7 @@ function api()
                         )) {
                         header('HTTP/1.1 200 OK');
                         $result = delete_turnover($urls[3], $urls[6]);
+                        $check = true;
                     }
                 }
                 if ($urls[4] === 'bonus'
@@ -132,14 +155,17 @@ function api()
                     if ($urls[5] === 'select') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_bonus($urls[3]));
+                        $check = true;
                     }
                     if ($urls[5] === 'select-by-days') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_bonus_days($urls[3]));
+                        $check = true;
                     }
                     if ($urls[5] === 'add') {
                         header('HTTP/1.1 200 OK');
                         $result = add_bonus($urls[3], 0);
+                        $check = true;
                     }
                     if ($urls[5] === 'update'
                         && count($urls) === 7
@@ -147,6 +173,7 @@ function api()
                         )) {
                         header('HTTP/1.1 200 OK');
                         $result = update_bonus($urls[3], $urls[6]);
+                        $check = true;
                     }
                     if ($urls[5] === 'delete'
                         && count($urls) === 7
@@ -154,22 +181,26 @@ function api()
                         )) {
                         header('HTTP/1.1 200 OK');
                         $result = delete_bonus($urls[3], $urls[6]);
+                        $check = true;
                     }
                     if ($urls[5] === 'remove') {
                         header('HTTP/1.1 200 OK');
                         $result = remove_bonus($urls[3]);
+                        $check = true;
                     }
                 }
                 if ($urls[4] === 'discount'
-                && mode()==='discount'
+                    && mode() === 'discount'
                 ) {
                     if ($urls[5] === 'select') {
                         header('HTTP/1.1 200 OK');
                         $result = json_encode(select_discount($urls[3]));
+                        $check = true;
                     }
                     if ($urls[5] === 'add') {
                         header('HTTP/1.1 200 OK');
                         $result = add_discount($urls[3]);
+                        $check = true;
                     }
                     if ($urls[5] === 'update'
                         && count($urls) === 7
@@ -177,6 +208,7 @@ function api()
                         )) {
                         header('HTTP/1.1 200 OK');
                         $result = update_discount($urls[3], $urls[6]);
+                        $check = true;
                     }
                     if ($urls[5] === 'delete'
                         && count($urls) === 7
@@ -184,15 +216,18 @@ function api()
                         )) {
                         header('HTTP/1.1 200 OK');
                         $result = delete_discount($urls[3], $urls[6]);
+                        $check = true;
                     }
                 }
                 if ($urls[4] === 'block-card') {
-                    header('HTTP/1.1 201 Created');
+                    header('HTTP/1.1 200 OK');
                     $result = block_card($urls[3]);
+                    $check = true;
                 }
                 if ($urls[4] === 'delete-card') {
-                    header('HTTP/1.1 201 Created');
+                    header('HTTP/1.1 200 OK');
                     $result = delete_card($urls[3]);
+                    $check = true;
                 }
             }
         }
@@ -202,10 +237,12 @@ function api()
             if ($urls[3] === 'select') {
                 header('HTTP/1.1 200 OK');
                 $result = json_encode(turnover_all());
+                $check = true;
             }
             if ($urls[3] === 'select-with-card') {
                 header('HTTP/1.1 200 OK');
                 $result = json_encode(turnover_all_card());
+                $check = true;
             }
         }
         if ($urls[2] === 'bonus'
@@ -215,6 +252,7 @@ function api()
         ) {
             header('HTTP/1.1 200 OK');
             $result = json_encode(bonus_all());
+            $check = true;
         }
         if ($urls[2] === 'discount'
             && $urls[3] === 'select'
@@ -223,6 +261,10 @@ function api()
         ) {
             header('HTTP/1.1 200 OK');
             $result = json_encode(discount_all());
+            $check = true;
+        }
+        if ($check === false) {
+            header('HTTP/1.1 400 Bad Request');
         }
     }
     return $result;
@@ -253,20 +295,24 @@ function name_user()
 function add_mode()
 {
     $mode = $_POST['mode_card'];
-    $mysqli = connection();
-    $sql = <<<SQL
+    $check = false;
+    if ($mode === 'bonus' || $mode === 'discount') {
+        $check = true;
+        $mysqli = connection();
+        $sql = <<<SQL
        UPDATE mode_cards SET mode_card = '$mode' WHERE id = '1'
       
 SQL;
-    try {
-        if (!$mysqli->query($sql)) {
-            throw new Exception($mysqli->error);
-        }
+        try {
+            if (!$mysqli->query($sql)) {
+                throw new Exception($mysqli->error);
+            }
 
-    } catch (Exception $e) {
-        echo 'Error: ', $e->getMessage(), "\n";
+        } catch (Exception $e) {
+            echo 'Error: ', $e->getMessage(), "\n";
+        }
     }
-    return true;
+    return $check;
 }
 
 function select_mode()
@@ -297,8 +343,14 @@ function mode()
 }
 
 function connection()
-{
-    return $mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
+{$mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
+    if (!mysqli_set_charset($mysqli, "utf8")) {
+        printf("Ошибка при загрузке набора символов utf8: %s\n", mysqli_error($mysqli));
+        exit();
+    } else {
+         mysqli_character_set_name($mysqli);
+    }
+    return  $mysqli;
 }
 
 function select_users()
@@ -354,19 +406,23 @@ function create_user()
     $name = $_POST['name_user'];
     $key = hash('tiger192,3', $name);
     $worker = $_POST['function'];
-    $mysqli = connection();
-    $sql = <<<SQL
+    $check = false;
+    if ($worker === 'operator' || $worker === 'manager') {
+        $check = true;
+        $mysqli = connection();
+        $sql = <<<SQL
         INSERT INTO users (id, api_key, name, function) VALUES 
         (null, '$key', '$name', '$worker' )
 SQL;
-    try {
-        if (!$mysqli->query($sql)) {
-            throw new Exception($mysqli->error);
+        try {
+            if (!$mysqli->query($sql)) {
+                throw new Exception($mysqli->error);
+            }
+        } catch (Exception $e) {
+            echo 'Error: ', $e->getMessage(), "\n";
         }
-    } catch (Exception $e) {
-        echo 'Error: ', $e->getMessage(), "\n";
     }
-    return true;
+    return $check;
 }
 
 function update_user($id)
@@ -374,19 +430,23 @@ function update_user($id)
     $key = $_POST['api_key'];
     $name = $_POST['name_user'];
     $worker = $_POST['function'];
-    $mysqli = connection();
-    $sql = <<<SQL
+    $check = false;
+    if ($worker === 'operator' || $worker === 'manager') {
+        $check = true;
+        $mysqli = connection();
+        $sql = <<<SQL
         UPDATE users SET api_key = '$key', name = '$name', function = '$worker' WHERE id = $id
         
 SQL;
-    try {
-        if (!$mysqli->query($sql)) {
-            throw new Exception($mysqli->error);
+        try {
+            if (!$mysqli->query($sql)) {
+                throw new Exception($mysqli->error);
+            }
+        } catch (Exception $e) {
+            echo 'Error: ', $e->getMessage(), "\n";
         }
-    } catch (Exception $e) {
-        echo 'Error: ', $e->getMessage(), "\n";
     }
-    return true;
+    return $check;
 }
 
 function delete_user($id)
@@ -489,17 +549,18 @@ function select_clients_days()
 {
     $firstday = $_POST['firstday'];
     $lastday = $_POST['lastday'];
-    $mysqli = connection();
-    $sql = <<<SQL
+    $res = false;
+           $mysqli = connection();
+        $sql = <<<SQL
         SELECT * FROM clients WHERE  DATE_FORMAT(edition,'%Y-%m-%d') BETWEEN '$firstday' AND '$lastday' ORDER BY lastname
 SQL;
-    try {
-        if (!$res = $mysqli->query($sql)) {
-            throw new Exception($mysqli->error);
+        try {
+            if (!$res = $mysqli->query($sql)) {
+                throw new Exception($mysqli->error);
+            }
+        } catch (Exception $e) {
+            echo 'Error: ', $e->getMessage(), "\n";
         }
-    } catch (Exception $e) {
-        echo 'Error: ', $e->getMessage(), "\n";
-    }
     return $res->fetch_all();
 }
 
@@ -967,6 +1028,7 @@ SQL;
     }
     return true;
 }
+
 function change_discount_card($id, $new)
 {
     $mysqli = connection();
