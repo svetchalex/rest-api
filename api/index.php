@@ -27,8 +27,6 @@ function api()
                 }
             }
         }
-
-
         if ($urls[2] === 'user'
             && login() === 'manager'
         ) {
@@ -270,6 +268,11 @@ function api()
     return $result;
 }
 
+/**
+ * Метод реализует авторизацию пользователя, возвращает его должность
+ *
+ * @return mixed
+ */
 function login()
 {
     $function = false;
@@ -281,6 +284,11 @@ function login()
     return $function;
 }
 
+/**
+ * Метод возвращает имя авторизированного пользователя
+ *
+ * @return mixed
+ */
 function name_user()
 {
     $name = false;
@@ -292,6 +300,11 @@ function name_user()
     return $name;
 }
 
+/**
+ * Метод назначает вид карт, используемых в сервисе
+ *
+ * @return bool
+ */
 function add_mode()
 {
     $mode = $_POST['mode_card'];
@@ -307,7 +320,6 @@ SQL;
             if (!$mysqli->query($sql)) {
                 throw new Exception($mysqli->error);
             }
-
         } catch (Exception $e) {
             echo 'Error: ', $e->getMessage(), "\n";
         }
@@ -315,6 +327,11 @@ SQL;
     return $check;
 }
 
+/**
+ * Метод вынимает из базы данных вид карт
+ *
+ * @return array|null
+ */
 function select_mode()
 {
     $mysqli = connection();
@@ -326,27 +343,33 @@ SQL;
         if (!$res = $mysqli->query($sql)) {
             throw new Exception($mysqli->error);
         }
-
     } catch (Exception $e) {
         echo 'Error: ', $e->getMessage(), "\n";
     }
-
-
     return $res->fetch_assoc();
 }
 
+/**
+ * Метод возвращает вид карт, используемых в сервисе
+ *
+ * @return mixed
+ */
 function mode()
 {
     $mode_card = select_mode();
     $result = $mode_card['mode_card'];
     return $result;
 }
-
 function connection()
 {
     return  $mysqli = new mysqli('localhost', 'user', 'Anarasumanara1812-', 'card');
 }
 
+/**
+ * Метод возвращает список пользователей
+ *
+ * @return mixed
+ */
 function select_users()
 {
     $mysqli = connection();
@@ -363,6 +386,13 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод возвращает пользователя по его ключу
+ *
+ * @param $key
+ *
+ * @return array|null
+ */
 function select_user_key($key)
 {
     $mysqli = connection();
@@ -379,6 +409,13 @@ SQL;
     return $res->fetch_assoc();
 }
 
+/**
+ * Метод возвращает пользователя по его идентификатору
+ *
+ * @param $id
+ *
+ * @return mixed
+ */
 function select_user($id)
 {
     $mysqli = connection();
@@ -395,6 +432,11 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, создающий нового пользователя
+ *
+ * @return bool
+ */
 function create_user()
 {
     $name = $_POST['name_user'];
@@ -419,6 +461,13 @@ SQL;
     return $check;
 }
 
+/**
+ * Метод, изменяющий данные пользователя
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function update_user($id)
 {
     $key = $_POST['api_key'];
@@ -443,6 +492,13 @@ SQL;
     return $check;
 }
 
+/**
+ * Метод, удаляющий пользователя
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function delete_user($id)
 {
     $mysqli = connection();
@@ -459,6 +515,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, выбирающий клиента по его номеру телефона
+ *
+ * @param $telephone
+ *
+ * @return mixed
+ */
 function select_telephone($telephone)
 {
     $mysqli = connection();
@@ -475,6 +538,13 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, выбирающий клиента по его идентификатору
+ *
+ * @param $id
+ *
+ * @return array|null
+ */
 function select_client($id)
 {
     $mysqli = connection();
@@ -491,6 +561,13 @@ SQL;
     return $res->fetch_assoc();
 }
 
+/**
+ * Метод, возвращающий польователя по номеру его карты
+ *
+ * @param $card
+ *
+ * @return mixed
+ */
 function select_card($card)
 {
     $mysqli = connection();
@@ -507,6 +584,11 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод возвращающий список клиентов сервиса
+ *
+ * @return mixed
+ */
 function select_clients()
 {
     $mysqli = connection();
@@ -523,6 +605,11 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, возвращающий список клиентов с активными картами
+ *
+ * @return mixed
+ */
 function select_active_clients()
 {
     $mysqli = connection();
@@ -539,25 +626,35 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, возвращающий список клинетов зарегистрированных в определенный срок
+ *
+ * @return mixed
+ */
 function select_clients_days()
 {
     $firstday = $_POST['firstday'];
     $lastday = $_POST['lastday'];
     $res = false;
-           $mysqli = connection();
-        $sql = <<<SQL
+    $mysqli = connection();
+    $sql = <<<SQL
         SELECT * FROM clients WHERE  DATE_FORMAT(edition,'%Y-%m-%d') BETWEEN '$firstday' AND '$lastday' ORDER BY lastname
 SQL;
-        try {
-            if (!$res = $mysqli->query($sql)) {
-                throw new Exception($mysqli->error);
-            }
-        } catch (Exception $e) {
-            echo 'Error: ', $e->getMessage(), "\n";
+    try {
+        if (!$res = $mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
         }
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
     return $res->fetch_all();
 }
 
+/**
+ * Метод, создающий нового клиента
+ *
+ * @return bool
+ */
 function create_client()
 {
     $lastname = $_POST['lastname'];
@@ -586,6 +683,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, изменяющий данные клиента
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function update_client($id)
 {
     $lastname = $_POST['lastname'];
@@ -615,6 +719,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, удаляющий клиента из базы данных
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function delete_client($id)
 {
     $mysqli = connection();
@@ -631,6 +742,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод меняет статус карты на заблокированный
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function block_card($id)
 {
     $mysqli = connection();
@@ -648,6 +766,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод меняет статус карты на удаленный
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function delete_card($id)
 {
     $mysqli = connection();
@@ -665,6 +790,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, возвращающий список покупок клиента по его идентификатору
+ *
+ * @param $client
+ *
+ * @return mixed
+ */
 function select_turnover($client)
 {
     $mysqli = connection();
@@ -681,6 +813,13 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, добавляющий новую покупку в базу данных
+ *
+ * @param $client
+ *
+ * @return bool
+ */
 function add_turnover($client)
 {
     $date = date('Y-m-d H:i:s');
@@ -700,6 +839,14 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, удаляющий покупку из базы данных
+ *
+ * @param $client
+ * @param $id
+ *
+ * @return bool
+ */
 function delete_turnover($client, $id)
 {
     $mysqli = connection();
@@ -716,6 +863,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, возвращающий список начисленных и списанных бонусов клиента
+ *
+ * @param $client
+ *
+ * @return mixed
+ */
 function select_bonus($client)
 {
     $mysqli = connection();
@@ -732,6 +886,13 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, возращающий список бонусов за определенный срок
+ *
+ * @param $client
+ *
+ * @return mixed
+ */
 function select_bonus_days($client)
 {
     $firstday = $_POST['firstday'];
@@ -751,6 +912,14 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод добавляет бонусы на карту клиента
+ *
+ * @param $client
+ * @param $bonus
+ *
+ * @return bool
+ */
 function add_bonus($client, $bonus)
 {
     $receipt = $_POST['amount'];
@@ -784,6 +953,14 @@ SQL;
     return $result;
 }
 
+/**
+ * Метод, вычисляющий является ли день зачисления бонуса днем рождения
+ *
+ * @param $id
+ * @param $dateBonus
+ *
+ * @return bool
+ */
 function birthday($id, $dateBonus)
 {
     $result = false;
@@ -800,6 +977,13 @@ function birthday($id, $dateBonus)
     return $result;
 }
 
+/**
+ * Метод, вычисляющий является ли дата зачисления бонуса праздником
+ *
+ * @param $dateBonus
+ *
+ * @return bool
+ */
 function holiday($dateBonus)
 {
     $result = false;
@@ -812,6 +996,14 @@ function holiday($dateBonus)
     return $result;
 }
 
+/**
+ * Метод, изменяющий данные зачисления бонуса
+ *
+ * @param $client
+ * @param $id
+ *
+ * @return bool
+ */
 function update_bonus($client, $id)
 {
     $balance = $_POST['balance'];
@@ -833,6 +1025,14 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, удаляющий бонус из базы данных
+ *
+ * @param $client
+ * @param $id
+ *
+ * @return bool
+ */
 function delete_bonus($client, $id)
 {
     $mysqli = connection();
@@ -849,6 +1049,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, возвращающий список изменений скидок клиента
+ *
+ * @param $client
+ *
+ * @return mixed
+ */
 function select_discount($client)
 {
     $mysqli = connection();
@@ -865,6 +1072,13 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод добавляющий смену скидки клиента
+ *
+ * @param $client
+ *
+ * @return bool
+ */
 function add_discount($client)
 {
     $current = $_POST['current'];
@@ -886,6 +1100,14 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, изменяющий данные смены скидки клиента
+ *
+ * @param $client
+ * @param $id
+ *
+ * @return bool
+ */
 function update_discount($client, $id)
 {
     $current = $_POST['current'];
@@ -907,6 +1129,14 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, удаляющий смену скидки клиента из базы данных
+ *
+ * @param $client
+ * @param $id
+ *
+ * @return bool
+ */
 function delete_discount($client, $id)
 {
     $mysqli = connection();
@@ -923,6 +1153,11 @@ SQL;
     return true;
 }
 
+/**
+ * Метод, возвращающий весь оборот покупок сервиса
+ *
+ * @return mixed
+ */
 function turnover_all()
 {
     $mysqli = connection();
@@ -939,6 +1174,11 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, возвращающий весь оборот покупок с использованием карт
+ *
+ * @return mixed
+ */
 function turnover_all_card()
 {
     $mysqli = connection();
@@ -955,6 +1195,11 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод возвращающий список всех бонусов
+ *
+ * @return mixed
+ */
 function bonus_all()
 {
     $mysqli = connection();
@@ -971,6 +1216,11 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, возвращающий все смены скидок
+ *
+ * @return mixed
+ */
 function discount_all()
 {
     $mysqli = connection();
@@ -987,6 +1237,13 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, проверяющий наличие даты в таблице праздников
+ *
+ * @param $date
+ *
+ * @return mixed
+ */
 function select_holiday($date)
 {
     $mysqli = connection();
@@ -1003,6 +1260,14 @@ SQL;
     return $res->fetch_all();
 }
 
+/**
+ * Метод, меняющий значение бонусов на карте
+ *
+ * @param $id
+ * @param $balance
+ *
+ * @return bool
+ */
 function change_bonus_card($id, $balance)
 {
     $client = select_client($id);
@@ -1023,6 +1288,14 @@ SQL;
     return true;
 }
 
+/**
+ *
+ * Метод, меняющий значение скидки на карте
+ * @param $id
+ * @param $new
+ *
+ * @return bool
+ */
 function change_discount_card($id, $new)
 {
     $mysqli = connection();
@@ -1040,6 +1313,13 @@ SQL;
     return true;
 }
 
+/**
+ * Метод снимающий бонусы с карты
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function remove_bonus($id)
 {
     $result = false;
@@ -1074,5 +1354,4 @@ SQL;
     }
     return $result;
 }
-
 echo api();
