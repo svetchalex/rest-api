@@ -55,16 +55,16 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="lastname"
 
-Суровая
+Чекалов
 --WebAppBoundary--
 --WebAppBoundary
 Content-Disposition: form-data; name="firstname"
 
-Анастасия
+Сергей
 --WebAppBoundary--
 Content-Disposition: form-data; name="telephone"
 
-79783641435
+79783604326
 --WebAppBoundary--
 Content-Disposition: form-data; name="birthday"
 
@@ -76,7 +76,7 @@ Content-Disposition: form-data; name="code"
 --WebAppBoundary--
 Content-Disposition: form-data; name="bonus"
 
-567
+0
 --WebAppBoundary--
 Content-Disposition: form-data; name="discount"
 
