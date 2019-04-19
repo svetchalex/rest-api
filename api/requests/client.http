@@ -84,7 +84,7 @@ Content-Disposition: form-data; name="discount"
 --WebAppBoundary--
 
 ###
-POST http://alpha.rarus-crimea.ru/api/client/update/13
+POST http://alpha.rarus-crimea.ru/api/client/update/3
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -100,7 +100,7 @@ Content-Disposition: form-data; name="firstname"
 --WebAppBoundary--
 Content-Disposition: form-data; name="telephone"
 
-79783644353
+79783643435
 --WebAppBoundary--
 Content-Disposition: form-data; name="birthday"
 
@@ -108,7 +108,7 @@ Content-Disposition: form-data; name="birthday"
 --WebAppBoundary--
 Content-Disposition: form-data; name="code"
 
-0000000000000005
+0000000000000003
 --WebAppBoundary--
 Content-Disposition: form-data; name="bonus"
 
