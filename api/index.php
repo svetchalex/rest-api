@@ -742,6 +742,14 @@ SQL;
     }
     return true;
 }
+
+/**
+ * Метод, удаляющий все бонусы клиента из базы данных
+ *
+ * @param $id
+ *
+ * @return bool
+ */
 function delete_bonuses($id)
 {
     $mysqli = connection();
