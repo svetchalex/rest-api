@@ -729,6 +729,7 @@ SQL;
 function delete_client($id)
 {
     $mysqli = connection();
+    delete_bonuses($id);
     $sql = <<<SQL
         DELETE FROM clients WHERE id = '$id'
 SQL;
@@ -741,7 +742,22 @@ SQL;
     }
     return true;
 }
+function delete_bonuses($id)
+{
+    $mysqli = connection();
 
+    $sql = <<<SQL
+        DELETE FROM bonuses WHERE id_client = '$id'
+SQL;
+    try {
+        if (!$mysqli->query($sql)) {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        echo 'Error: ', $e->getMessage(), "\n";
+    }
+    return true;
+}
 /**
  * Метод меняет статус карты на заблокированный
  *
