@@ -4,7 +4,7 @@
 # * 'gtrp' and 'gtr' create a GET request with or without query parameters;
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-POST http://stud03/api/mode
+POST http://alpha.rarus-crimea.ru/api/mode
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -15,7 +15,7 @@ discount
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/mode
+POST http://alpha.rarus-crimea.ru/api/mode
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -27,7 +27,7 @@ bonus
 
 ###
 
-POST http://stud03/api/mode
+POST http://alpha.rarus-crimea.ru/api/mode
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 

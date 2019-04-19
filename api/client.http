@@ -4,22 +4,22 @@
 # * 'gtrp' and 'gtr' create a GET request with or without query parameters;
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-GET http://stud03/api/client/select/telephone/79784658647
+GET http://alpha.rarus-crimea.ru/api/client/select/telephone/79784658647
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 ###
-GET http://stud03/api/client/select/card/0000000000000001
+GET http://alpha.rarus-crimea.ru/api/client/select/card/0000000000000001
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
-GET http://stud03/api/client/select
+GET http://alpha.rarus-crimea.ru/api/client/select
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
-GET http://stud03/api/client/select-active
+GET http://alpha.rarus-crimea.ru/api/client/select-active
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
-POST http://stud03/api/client/select-by-days
+POST http://alpha.rarus-crimea.ru/api/client/select-by-days
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -33,7 +33,7 @@ Content-Disposition: form-data; name="lastday"
 2019-04-30
 --WebAppBoundary--
 ###
-POST http://stud03/api/client/select-by-days
+POST http://alpha.rarus-crimea.ru/api/client/select-by-days
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -48,7 +48,7 @@ Content-Disposition: form-data; name="lastday"
 --WebAppBoundary--
 ###
 
-POST http://stud03/api/client/create
+POST http://alpha.rarus-crimea.ru/api/client/create
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -84,7 +84,7 @@ Content-Disposition: form-data; name="discount"
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/client/update/13
+POST http://alpha.rarus-crimea.ru/api/client/update/13
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -132,18 +132,19 @@ Content-Disposition: form-data; name="edition"
 --WebAppBoundary--
 ###
 
-GET http://stud03/api/client/delete/13
+GET http://alpha.rarus-crimea.ru/api/client/delete/13
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
 
-GET http://stud03/api/client/3/block-card
+GET http://alpha.rarus-crimea.ru/api/client/3/block-card
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
-GET http://stud03/api/client/3/delete-card
+GET http://alpha.rarus-crimea.ru/api/client/3/delete-card
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 ###
-GET http://stud03/api/client/3/test
+
+GET http://alpha.rarus-crimea.ru/api/client/3/test
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 ###

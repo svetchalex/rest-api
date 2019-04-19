@@ -1,3 +1,9 @@
-RewriteEngine On    # Turn on the rewriting engine
 
-RewriteRule ^api/([0-9a-zA-Z_-]*)$ index.php?order_id=$1 [NC,L]
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^(.*)$ /api/$1 [R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ /api/index.php

@@ -4,19 +4,19 @@
 # * 'gtrp' and 'gtr' create a GET request with or without query parameters;
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-GET http://stud03/api/login
+GET http://alpha.rarus-crimea.ru/api/login
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
-GET http://stud03/api/user/select
+GET http://alpha.rarus-crimea.ru/api/user/select
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
-GET http://stud03/api/user/select/1
+GET http://alpha.rarus-crimea.ru/api/user/select/1
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
-POST http://stud03/api/user/create
+POST http://alpha.rarus-crimea.ru/api/user/create
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -31,7 +31,7 @@ operator
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/user/update/3
+POST http://alpha.rarus-crimea.ru/api/user/update/3
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -50,9 +50,11 @@ manager
 --WebAppBoundary--
 
 ###
-GET http://stud03/api/user/delete/3
+GET http://alpha.rarus-crimea.ru/api/user/delete/3
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
+
+
 
 

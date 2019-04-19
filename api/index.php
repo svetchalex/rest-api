@@ -343,14 +343,8 @@ function mode()
 }
 
 function connection()
-{$mysqli = new mysqli('localhost', 'stud03', 'password', 'card');
-    if (!mysqli_set_charset($mysqli, "utf8")) {
-        printf("Ошибка при загрузке набора символов utf8: %s\n", mysqli_error($mysqli));
-        exit();
-    } else {
-         mysqli_character_set_name($mysqli);
-    }
-    return  $mysqli;
+{
+    return  $mysqli = new mysqli('localhost', 'user', 'Anarasumanara1812-', 'card');
 }
 
 function select_users()

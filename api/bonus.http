@@ -4,11 +4,11 @@
 # * 'gtrp' and 'gtr' create a GET request with or without query parameters;
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-GET http://stud03/api/client/1/bonus/select
+GET http://alpha.rarus-crimea.ru/api/client/1/bonus/select
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
-POST http://stud03/api/client/1/bonus/select-by-days
+POST http://alpha.rarus-crimea.ru/api/client/1/bonus/select-by-days
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -22,7 +22,7 @@ Content-Disposition: form-data; name="lastday"
 2019-04-30
 --WebAppBoundary--
 ###
-POST http://stud03/api/client/1/bonus/add
+POST http://alpha.rarus-crimea.ru/api/client/1/bonus/add
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -45,7 +45,7 @@ Content-Disposition: form-data; name="date_bonus"
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/client/1/bonus/add
+POST http://alpha.rarus-crimea.ru/api/client/1/bonus/add
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -68,7 +68,7 @@ Content-Disposition: form-data; name="date_bonus"
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/client/3/bonus/add
+POST http://alpha.rarus-crimea.ru/client/3/bonus/add
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -87,7 +87,7 @@ Content-Disposition: form-data; name="balance"
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/client/1/bonus/update/4
+POST http://alpha.rarus-crimea.ru/api/client/1/bonus/update/4
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -106,22 +106,22 @@ Content-Disposition: form-data; name="date_bonus"
 --WebAppBoundary--
 
 ###
-GET http://stud03/api/client/1/bonus/delete/4
+GET http://alpha.rarus-crimea.ru/api/client/1/bonus/delete/3
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
-GET http://stud03/api/bonus/select
+GET http://alpha.rarus-crimea.ru/api/bonus/select
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
-POST http://stud03/api/client/1/bonus/remove
+POST http://alpha.rarus-crimea.ru/api/client/1/bonus/remove
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
 Content-Disposition: form-data; name="remove_bonus"
 
-4672
+40
 --WebAppBoundary--
 
 ###

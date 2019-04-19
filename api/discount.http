@@ -4,11 +4,11 @@
 # * 'gtrp' and 'gtr' create a GET request with or without query parameters;
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-GET http://stud03/api/client/2/discount/select
+GET http://alpha.rarus-crimea.ru/api/client/2/discount/select
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
-POST http://stud03/api/client/5/discount/add
+POST http://alpha.rarus-crimea.ru/api/client/5/discount/add
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -23,7 +23,7 @@ Content-Disposition: form-data; name="new"
 --WebAppBoundary--
 
 ###
-POST http://stud03/api/client/2/discount/update/2
+POST http://alpha.rarus-crimea.ru/api/client/2/discount/update/2
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -42,11 +42,11 @@ Content-Disposition: form-data; name="date_discount"
 --WebAppBoundary--
 
 ###
-GET http://stud03/api/client/2/discount/delete/2
+GET http://alpha.rarus-crimea.ru/api/client/2/discount/delete/2
 Authorization: Basic MTQ2YTc0OTI3MTliMzU2NDA5NGVmZTdhYmJkNDBhNzQxNmZkOTAwMTc5ZDAyNzczNTQ6
 
 ###
-GET  http://stud03/api/discount/select
+GET  http://alpha.rarus-crimea.ru/api/discount/select
 Authorization: Basic NjQzNTliNzE5Mjc0NmExNDc0MGFkNGJiN2FmZTRlMDk3MzI3ZDA3OTAxOTBmZDE2MzE6
 
 ###
